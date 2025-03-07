@@ -10,7 +10,7 @@ class HozzavaloController extends Controller
 {
     public function index(){
         $hozzavalok = Hozzavalo::all();
-        return response(json_encode(['success' => true, 'hozzavalok' => $hozzavalok]));
+        return response()->json($hozzavalok);
     }
 
     public function store(Request $request){
@@ -27,7 +27,7 @@ class HozzavaloController extends Controller
                 'mertekegyseg' =>'mértékegység',
             ]);
         } catch (ValidationException $e) {
-            return response(json_encode(['success' =>false, 'error' => $e->getMessage(),]),400, options:JSON_UNESCAPED_UNICODE);
+            return response()->json(['success' =>false, 'error' => $e->getMessage()],400, options:JSON_UNESCAPED_UNICODE);
         }
         
         Hozzavalo::create([
@@ -35,6 +35,6 @@ class HozzavaloController extends Controller
             'mertekegyseg' => $request->mertekegyseg,
         ]);
 
-        return response(json_encode(['success' =>true, 'message' => 'Sikeresen rögzítve']),201, options:JSON_UNESCAPED_UNICODE);
+        return response()->json(['success' =>true, 'message' => 'Sikeresen rögzítve'],201, options:JSON_UNESCAPED_UNICODE);
     }
 }

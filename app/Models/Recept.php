@@ -10,6 +10,6 @@ class Recept extends Model
     protected $fillable = ["nev","ido","nehezseg","leiras"];
     public function hozzavalok()
     {
-        return $this -> belongsToMany(Hozzavalo::class) -> withPivot("mennyiseg");
+        return $this -> belongsToMany(Hozzavalo::class,'kapcsolo','recept_id','hozzavalo_id') -> withPivot("mennyiseg");
     }
 }

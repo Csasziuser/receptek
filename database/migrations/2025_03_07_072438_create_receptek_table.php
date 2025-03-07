@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string("nev");
             $table->integer("ido");
-            $table->string("nehezseg");
-            $table->string("leiras");
+            $table->string("nehezseg")->nullable(true);
+            $table->text("leiras");
             $table->timestamps();
         });
     }
