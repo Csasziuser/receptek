@@ -9,8 +9,26 @@ use App\Models\Recept;
 
 class ReceptController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->has('id'))
+        {
+            $recept = Recept::findOrFail($request->id)->load('hozzavalok');
+            return response()->json([
+                'id'=>$recept->id,
+                'nev'=>$recept->nev,
+                'ido'=>$recept->ido,
+                'nehezseg'=>$recept->nehezseg,
+                'leiras'=>$recept->leiras,
+                'hozzavalok'=>$recept->hozzavalok->map(function($item){
+                    return [
+                        'mennyiseg'=>$item->pivot->mennyiseg,
+                        'nev'=>$item->nev,
+                        'mertekegyseg'=>$item->mertekegyseg
+                    ];
+                 })])
+            ;
+        }
         $receptek = Recept::all();
         return response(json_encode(["success" => true, 'receptek' => $receptek]));
     }
